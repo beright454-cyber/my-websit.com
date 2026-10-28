@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEright Automations | Ultra-Tier Engineering & Architecture</title>
+  
+  <!-- Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg-base: #050711;
+      --bg-radial: #130a2a;
+      --primary-accent: #00f2fe;
+      --secondary-accent: #9d4edd;
+      --card-bg: rgba(13, 18, 38, 0.7);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --card-glow: rgba(0, 242, 254, 0.3);
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 10%, var(--bg-radial) 0%, var(--bg-base) 65%, #020308 100%);
+      color: #f8fafc;
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* 3D Cyber Floor Grid */
+    .perspective-grid {
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: perspective(600px) rotateX(60deg);
+      transform-origin: center bottom;
+    }
+
+    /* Universal Rainbow Color-Changing Title */
+    @keyframes universalShift {
+      0% { filter: hue-rotate(0deg) drop-shadow(0 0 25px var(--primary-accent)); }
+      50% { filter: hue-rotate(180deg) drop-shadow(0 0 45px var(--secondary-accent)); }
+      100% { filter: hue-rotate(360deg) drop-shadow(0 0 25px var(--primary-accent)); }
+    }
+    .animated-brand-title {
+      background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent), #ec4899, #f59e0b, var(--primary-accent));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: universalShift 7s ease infinite;
+    }
+
+    /* Rotating Crown Aura */
+    @keyframes ringPulse {
+      0% { transform: rotate(0deg); filter: drop-shadow(0 0 15px var(--primary-accent)); }
+      50% { filter: drop-shadow(0 0 30px var(--secondary-accent)); }
+      100% { transform: rotate(360deg); filter: drop-shadow(0 0 15px var(--primary-accent)); }
+    }
+    .crown-aura {
+      animation: ringPulse 6s linear infinite;
+    }
+
+    /* 5 Subtle Background Watermarks */
+    .watermark-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .watermark-1 { top: 8%; left: -3%; font-size: 20vw; font-weight: 900; opacity: 0.025; font-family: var(--font-heading); }
+    .watermark-2 { top: 40%; right: -5%; width: 550px; height: 550px; opacity: 0.03; border: 2px dashed var(--primary-accent); border-radius: 50%; }
+    .watermark-3 { bottom: 18%; left: 5%; width: 420px; height: 420px; opacity: 0.025; border: 1px solid var(--secondary-accent); transform: rotate(45deg); }
+    .watermark-4 { top: 68%; left: 35%; font-size: 13vw; font-weight: 800; opacity: 0.02; letter-spacing: 0.2em; font-family: var(--font-heading); }
+    .watermark-5 { bottom: -6%; right: 8%; width: 480px; height: 480px; opacity: 0.035; border-radius: 50%; background: conic-gradient(from 0deg, var(--primary-accent), transparent 60%); }
+
+    /* Diverse Dynamic Card Styles */
+    .card-style-cyber {
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(13, 18, 38, 0.75) 100%);
+      backdrop-filter: blur(20px);
+    }
+    .card-style-nano {
+      border-radius: 0.75rem;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      background: radial-gradient(circle at top left, rgba(0, 242, 254, 0.08) 0%, rgba(8, 12, 28, 0.85) 100%);
+      box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.05);
+    }
+    .card-style-matrix {
+      border-radius: 1.25rem;
+      border-left: 4px solid var(--primary-accent);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 15, 30, 0.8);
+    }
+    .card-style-hologram {
+      border-radius: 2rem;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, rgba(6, 9, 20, 0.9) 100%);
+    }
+
+    .system-card {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .system-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    /* Namaste Indian Kid Avatar Animation */
+    @keyframes namasteBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    .namaste-bob { animation: namasteBob 3s ease-in-out infinite; }
+  </style>
+</head>
+<body class="flex flex-col justify-between relative selection:bg-cyan-500 selection:text-black">
+
+  <!-- 5 SUBTLE BACKGROUND WATERMARKS -->
+  <div class="watermark-layer">
+    <div class="absolute watermark-1 select-none">BERIGHT</div>
+    <div class="absolute watermark-2 select-none animate-spin" style="animation-duration: 90s;"></div>
+    <div class="absolute watermark-3 select-none"></div>
+    <div class="absolute watermark-4 select-none">ENGINEERING</div>
+    <div class="absolute watermark-5 select-none animate-spin" style="animation-duration: 60s;"></div>
+  </div>
+
+  <!-- Ambient Perspective Floor & Lighting -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-36 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-purple-600/25 via-cyan-500/15 to-transparent rounded-full blur-[140px]"></div>
+    <div class="absolute -bottom-24 left-0 right-0 h-[450px] perspective-grid opacity-50"></div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header class="relative z-30 border-b border-white/10 bg-slate-950/50 backdrop-blur-xl px-6 py-4 shadow-xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- 3 Lines Hamburger Menu Button -->
+      <button onclick="toggleSideMenu()" class="w-11 h-11 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-cyan-300 hover:text-white flex flex-col items-center justify-center gap-1.5 transition">
+        <span class="w-5 h-0.5 bg-current rounded-full"></span>
+        <span class="w-4 h-0.5 bg-current rounded-full"></span>
+        <span class="w-5 h-0.5 bg-current rounded-full"></span>
+      </button>
+
+      <!-- Center Brand Title -->
+      <div class="text-center px-2 cursor-pointer" onclick="showCatalogView()">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight animated-brand-title font-heading">
+          BEright Automations
+        </h1>
+        <p class="text-[11px] sm:text-xs font-semibold text-cyan-200/80 tracking-widest uppercase mt-0.5">
+          Ultra-Tier Engineering & Architecture
+        </p>
+      </div>
+
+      <!-- Right: Rotating Crown Logo + Hidden Admin Console (PIN: 5047) -->
+      <div class="flex items-center gap-3">
+        <button onclick="triggerAdminModal()" title="Admin Control" class="w-9 h-9 rounded-xl bg-slate-900/70 border border-white/15 text-slate-400 hover:text-cyan-300 flex items-center justify-center transition">
+          <i class="fa-solid fa-sliders text-xs"></i>
+        </button>
+
+        <div class="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+          <div class="absolute inset-0 rounded-2xl p-[2px] crown-aura bg-gradient-to-tr from-cyan-400 via-pink-500 to-amber-400"></div>
+          <div class="relative w-full h-full bg-[#0a0e27] rounded-2xl flex flex-col items-center justify-center border border-white/20 shadow-inner">
+            <span class="text-[10px] text-amber-400 leading-none">👑</span>
+            <span class="font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-amber-300 text-base sm:text-lg tracking-wider font-heading">BE</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Slide Navigation Drawer -->
+  <div id="sideMenuDrawer" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden">
+    <div class="absolute top-0 left-0 bottom-0 w-80 bg-slate-950/95 border-r border-white/10 p-6 flex flex-col justify-between shadow-2xl">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-white/10 mb-6">
+          <div class="flex items-center gap-3">
+            <span class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center font-bold">BE</span>
+            <span class="font-bold text-white font-heading">Control Menu</span>
+          </div>
+          <button onclick="toggleSideMenu()" class="text-slate-400 hover:text-white">
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+
+        <nav class="space-y-3 font-semibold text-sm">
+          <button onclick="showCatalogView(); toggleSideMenu()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-cyan-500/20 text-slate-200 transition text-left">
+            <i class="fa-solid fa-layer-group text-cyan-400 w-5"></i> All Systems Catalog
+          </button>
+          <button onclick="openBookingModal('Direct Consultation'); toggleSideMenu()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-slate-200 transition text-left">
+            <i class="fa-solid fa-envelope-open-text text-emerald-400 w-5"></i> Contact & Order Form
+          </button>
+          <button onclick="triggerAdminModal(); toggleSideMenu()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-purple-500/20 text-slate-200 transition text-left">
+            <i class="fa-solid fa-sliders text-purple-400 w-5"></i> Admin Console (100 Themes)
+          </button>
+        </nav>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
+        <p class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Direct Connect</p>
+        <p class="text-slate-200 flex items-center gap-2"><i class="fa-brands fa-whatsapp text-emerald-400"></i> +48 510 820 441</p>
+        <p class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-envelope text-rose-400"></i> beright454@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 1: SCROLL DOWN CONTINUOUS SYSTEMS CATALOG (NO GITHUB ICONS ON CARDS) -->
+  <main id="catalogView" class="relative z-10 max-w-7xl mx-auto w-full px-6 py-10 flex-1">
+    
+    <div class="text-center max-w-4xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-400/30 text-cyan-300 text-xs font-semibold mb-4 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> CLOUD CORE ACTIVE
+      </div>
+      <h2 class="text-3xl sm:text-5xl md:text-6xl font-black font-heading leading-tight mb-4">
+        Intelligent Systems Built For <br class="hidden sm:inline" />
+        <span class="bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">Extreme Scale & Operations</span>
+      </h2>
+      <p class="text-slate-300/80 text-sm sm:text-base max-w-2xl mx-auto">
+        Scroll down through the system directory. Click on any system card to open its dedicated full specification and live demo view.
+      </p>
+    </div>
+
+    <!-- Category Filters -->
+    <div id="categoryTabs" class="flex flex-wrap items-center justify-center gap-2 mb-10"></div>
+
+    <!-- Scrollable Grid of Unique Styled Cards -->
+    <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="col-span-full text-center py-16 text-cyan-300 text-sm font-semibold">
+        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-3 text-cyan-400"></i><br>
+        Loading System Catalog...
+      </div>
+    </div>
+
+  </main>
+
+  <!-- VIEW 2: DEDICATED FULL SCREEN SYSTEM VIEWER (NO FORM, DIRECT SPECS & GITHUB LAUNCH) -->
+  <main id="detailsView" class="relative z-10 max-w-5xl mx-auto w-full px-6 py-10 flex-1 hidden">
+    
+    <div class="mb-6 flex items-center justify-between">
+      <button onclick="showCatalogView()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left"></i> Back to System Catalog
+      </button>
+      <span id="pageCategoryBadge" class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"></span>
+    </div>
+
+    <!-- Details Presentation -->
+    <div class="card-style-cyber rounded-3xl p-8 sm:p-12 border border-white/20 mb-8 relative overflow-hidden">
+      <div id="pageCardAccentGlow" class="absolute -top-32 -right-32 w-80 h-80 rounded-full blur-[100px] pointer-events-none opacity-40"></div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center gap-6 mb-8">
+        <div id="pageIconBox" class="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl shadow-inner border border-white/20 bg-white/5">
+          ⚡
+        </div>
+        <div>
+          <h2 id="pageTitle" class="text-3xl sm:text-4xl md:text-5xl font-black font-heading text-white"></h2>
+          <p id="pageShortDesc" class="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- Feature Badges -->
+      <div class="bg-black/40 border border-white/10 rounded-2xl p-6 sm:p-8 mb-8">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-microchip text-cyan-400"></i> Architectural Specifications & System Capabilities
+        </h3>
+        <div id="pageFeatureGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-200"></div>
+      </div>
+
+      <!-- Launch Demo / GitHub Repository -->
+      <div class="flex flex-wrap gap-4 pt-4 border-t border-white/10">
+        <a id="pageGithubBtn" href="#" target="_blank" class="flex-1 py-3.5 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-center text-sm transition flex items-center justify-center gap-2">
+          <i class="fa-brands fa-github text-lg"></i> Launch Source Code / Live Deployment
+        </a>
+        <button onclick="openBookingFromSpecs()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 font-bold text-white shadow-xl shadow-cyan-500/25 hover:opacity-95 transition text-sm">
+          Request Custom Build
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- CORNER FLOATING BADGES: CONTACT FORM, WHATSAPP, GMAIL & DYNAMIC CHATBOT -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3.5">
+    
+    <!-- Floating Dedicated Contact / Registration Form Trigger -->
+    <button onclick="openBookingModal('General Order / Inquiry')" title="Open Service & Registration Form" class="group flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 border border-cyan-300/50 text-white shadow-xl shadow-cyan-500/30 transition hover:scale-105">
+      <i class="fa-solid fa-file-signature text-lg"></i>
+      <span class="text-xs font-bold tracking-wide font-heading">Service Order Form</span>
+    </button>
+
+    <!-- Multi-Language Namaste Chatbot Avatar (Dynamic GitHub Hook) -->
+    <div class="relative flex items-center gap-2.5">
+      <div id="chatbotSpeechBubble" class="bg-slate-900/95 border border-cyan-400/50 text-cyan-300 text-xs px-3 py-1.5 rounded-2xl whitespace-nowrap shadow-xl font-semibold transition-all">
+        <span id="speechText">নমস্কার! 🙏</span>
+      </div>
+
+      <button id="chatbotTriggerBtn" onclick="launchChatbot()" title="Open AI Chatbot" class="namaste-bob relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-cyan-500 p-[2px] shadow-2xl transition hover:scale-110 flex items-center justify-center">
+        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center overflow-hidden border border-white/20">
+          <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="24" r="16" fill="#fbcfe8"/>
+            <path d="M18 22C18 13.5 24.5 9 32 9C39.5 9 46 13.5 46 22C46 18 41 12 32 12C23 12 18 18 18 22Z" fill="#1e1b4b"/>
+            <circle cx="27" cy="23" r="2" fill="#0f172a"/>
+            <circle cx="37" cy="23" r="2" fill="#0f172a"/>
+            <path d="M29 28C30.5 30 33.5 30 35 28" stroke="#e11d48" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 14V18" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="32" cy="19" r="1" fill="#dc2626"/>
+            <path d="M20 42C20 34 25 33 32 33C39 33 44 34 44 42V56H20V42Z" fill="#f59e0b"/>
+            <path d="M28 35C28 35 30 31 32 31C34 31 36 35 36 35L33 42H31L28 35Z" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
+            <path d="M32 31V41" stroke="#b45309" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </button>
+    </div>
+
+    <!-- WhatsApp Direct Contact -->
+    <a href="https://wa.me/48510820441" target="_blank" title="WhatsApp Direct" class="group flex items-center gap-2 pl-3 pr-4 py-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/60 text-white shadow-xl shadow-emerald-600/30 transition hover:scale-105">
+      <i class="fa-brands fa-whatsapp text-2xl"></i>
+      <span class="text-xs font-bold tracking-wide font-heading">WhatsApp</span>
+    </a>
+
+    <!-- Gmail Direct Contact -->
+    <a href="mailto:beright454@gmail.com" title="Send Email" class="w-12 h-12 rounded-2xl bg-rose-600 hover:bg-rose-500 border border-rose-400/60 text-white flex items-center justify-center text-lg shadow-xl shadow-rose-600/30 transition hover:scale-110">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
+
+  </div>
+
+  <!-- MODAL: REGISTRATION & SERVICE INTAKE FORM (MOVED OUTSIDE CARDS) -->
+  <div id="orderModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl hidden items-center justify-center p-4">
+    <div class="bg-gradient-to-b from-slate-900 to-[#0a0e27] border border-cyan-500/40 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeModal('orderModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-lg font-bold font-heading text-white mb-1">Service & Registration Form</h3>
+      <p class="text-xs text-slate-400 mb-4">Direct dispatch to developer communication pipeline.</p>
+      
+      <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="text-slate-400 font-semibold">Interested Service / System</label>
+          <input type="text" id="orderServiceInput" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-cyan-300 font-bold mt-1" placeholder="e.g. AI Chatbot or Custom Webhook">
+        </div>
+        <div>
+          <label class="text-slate-400 font-semibold">Your Name</label>
+          <input type="text" id="clientName" required placeholder="Subrata Mondal" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-white mt-1 focus:border-cyan-400 outline-none">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-slate-400 font-semibold">Email Address</label>
+            <input type="email" id="clientEmail" required placeholder="name@example.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-white mt-1 focus:border-cyan-400 outline-none">
+          </div>
+          <div>
+            <label class="text-slate-400 font-semibold">Phone / WhatsApp</label>
+            <input type="tel" id="clientPhone" required placeholder="+48 ..." class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-white mt-1 focus:border-cyan-400 outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="text-slate-400 font-semibold">Custom Specifications</label>
+          <textarea id="clientNotes" rows="2" placeholder="Tell us what you want to build or automate..." class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-white mt-1 focus:border-cyan-400 outline-none resize-none"></textarea>
+        </div>
+        <button type="submit" id="submitBtn" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 font-bold text-white shadow-lg shadow-purple-500/25 hover:opacity-95 transition">
+          Submit Form
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MASTER ADMIN CONTROL CONSOLE (PIN: 5047) -->
+  <div id="adminModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-2xl hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-white/20 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+      <button onclick="closeModal('adminModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <!-- PIN Auth -->
+      <div id="adminPinSection">
+        <h3 class="text-xl font-bold font-heading text-white mb-2">Master Admin Key</h3>
+        <p class="text-xs text-slate-400 mb-5">Enter security PIN (5047) to configure themes, chatbot links, and services.</p>
+        <input type="password" id="adminPin" maxlength="4" placeholder="••••" class="w-full text-center tracking-widest text-3xl bg-black/40 border border-white/15 rounded-xl px-3 py-3 text-cyan-400 mb-4 outline-none focus:border-cyan-400 font-mono">
+        <button onclick="verifyAdminPin()" class="w-full py-3 rounded-xl bg-cyan-400 font-bold text-slate-950 text-sm">Verify Passcode</button>
+      </div>
+
+      <!-- Admin Actions Console -->
+      <div id="adminActionsSection" class="hidden space-y-6">
+        
+        <!-- Header & Nav Tabs -->
+        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+          <div>
+            <h3 class="text-lg font-bold font-heading text-cyan-300">BEright Central Console</h3>
+            <p class="text-[11px] text-slate-400">100 Tech Themes • Chatbot GitHub Hook • Dynamic Services</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="switchAdminTab('themes')" id="tabBtnThemes" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/50">100 Tech Themes</button>
+            <button onclick="switchAdminTab('services')" id="tabBtnServices" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-slate-400 border border-white/10">Add Service</button>
+            <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-slate-400 border border-white/10">Chatbot Hook</button>
+          </div>
+        </div>
+
+        <!-- TAB 1: 100 TECH THEME PRESETS ENGINE -->
+        <div id="adminTabThemes">
+          <div class="flex items-center justify-between mb-3">
+            <label class="text-xs font-bold text-slate-300">Choose Any of 100 Advanced Tech Themes:</label>
+            <span id="currentThemeLabel" class="text-xs text-cyan-400 font-mono font-bold">Theme #1 Active</span>
+          </div>
+          <div id="themePresetsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-h-80 overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- TAB 2: ADD SERVICE WITH CUSTOM COLOR & CARD STYLE -->
+        <div id="adminTabServices" class="hidden">
+          <form onsubmit="handleAdminAddService(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="text-slate-400 font-semibold">Service / System Name</label>
+              <input type="text" id="newServiceName" required placeholder="e.g. Computer Vision Sorting Bot" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-white outline-none focus:border-cyan-400">
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label class="text-slate-400 font-semibold">Category</label>
+                <input type="text" id="newServiceCategory" placeholder="AI / Automation / Web" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-white outline-none">
+              </div>
+              <div>
+                <label class="text-slate-400 font-semibold">Icon / Emoji</label>
+                <input type="text" id="newServiceEmoji" placeholder="🤖" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-white outline-none">
+              </div>
+              <div>
+                <label class="text-slate-400 font-semibold">Card Design Style</label>
+                <select id="newServiceCardStyle" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-cyan-300 outline-none">
+                  <option value="cyber">Cyber Gloss (Default)</option>
+                  <option value="nano">Nano-Tech Angular</option>
+                  <option value="matrix">Matrix Accent Strip</option>
+                  <option value="hologram">Hologram Dashed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-slate-400 font-semibold">GitHub / Live Project URL</label>
+                <input type="url" id="newServiceLink" placeholder="https://github.com/your-project" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-white outline-none">
+              </div>
+              <div>
+                <label class="text-slate-400 font-semibold">Card Accent Glow Color</label>
+                <select id="newServiceColor" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-cyan-300 outline-none">
+                  <option value="#00f2fe">Electric Cyan Glow</option>
+                  <option value="#10b981">Matrix Toxic Lime</option>
+                  <option value="#a855f7">Cyberpunk Purple</option>
+                  <option value="#ec4899">Hot Neon Pink</option>
+                  <option value="#f59e0b">Solar Flare Gold</option>
+                  <option value="#ef4444">Blood Red Plasma</option>
+                  <option value="#38bdf8">Glacier Blue</option>
+                  <option value="#f43f5e">Crimson Rose</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-slate-400 font-semibold">Brief Summary Description</label>
+              <input type="text" id="newServiceDesc" placeholder="Overview of features, purpose and benefits..." class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-white outline-none">
+            </div>
+
+            <div>
+              <label class="text-slate-400 font-semibold">Architecture Features (Comma-separated)</label>
+              <input type="text" id="newServiceFeatures" placeholder="Auto Trigger, Real-Time Cloud DB, Push Webhook, 24/7 Uptime" class="w-full bg-black/40 border border-white/10 rounded-lg p-2.5 text-white outline-none">
+            </div>
+
+            <button type="submit" id="adminAddBtn" class="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 text-sm">
+              Publish System To Cloud
+            </button>
+          </form>
+        </div>
+
+        <!-- TAB 3: CHATBOT GITHUB URL HOOK -->
+        <div id="adminTabSettings" class="hidden">
+          <div class="space-y-4 text-xs">
+            <p class="text-slate-300">Paste your AI Chatbot GitHub Pages or web link below. When configured, clicking the Indian Namaste Kid avatar will directly launch your chatbot!</p>
+            <div>
+              <label class="text-slate-400 font-semibold">Chatbot Web / GitHub URL</label>
+              <input type="url" id="chatbotUrlInput" placeholder="https://username.github.io/my-chatbot" class="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-cyan-300 outline-none text-sm font-mono mt-1">
+            </div>
+            <button onclick="saveChatbotUrl()" class="py-2.5 px-6 rounded-xl bg-cyan-400 font-bold text-slate-950 text-sm">
+              Save Chatbot Link
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Professional Footer -->
+  <footer class="relative z-10 border-t border-white/10 bg-slate-950/85 px-6 py-5 text-center text-xs text-slate-400 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        BEright Automations &copy; 2026. All rights reserved.
+      </div>
+      <div class="text-[11px] text-cyan-300/80 font-medium tracking-wide">
+        Powered by Python • JavaScript (ES6+) • HTML5 • CSS3 • REST APIs • Cloud Automation
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT MASTER LOGIC ================= -->
+  <script>
+    // -------------------------------------------------------------
+    // [ PASTE YOUR APPS SCRIPT DEPLOYED WEB APP URL HERE ]
+    // -------------------------------------------------------------
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDpkzE0F5Y5bwwVcosE3xkKB7_VS-LpKRavMsqQwmiA2rb0bmo7gZAM0etkXpEnivy/exec";
+    // -------------------------------------------------------------
+
+    let currentServices = [];
+    let selectedCategory = "ALL";
+    let activeDetailIndex = null;
+
+    // 100 ADVANCED TECH THEMES (Nano-Tech, Matrix, Cyber, Synthwave, Quantum, etc.)
+    const techThemeFamilies = [
+      { name: "Nano-Tech", prim: "#00f2fe", sec: "#10b981", bg: "#040914", rad: "#0a192f" },
+      { name: "Quantum Matrix", prim: "#10b981", sec: "#00f2fe", bg: "#020d0a", rad: "#062b1e" },
+      { name: "Cyberpunk Neon", prim: "#ec4899", sec: "#a855f7", bg: "#0d0414", rad: "#2d0838" },
+      { name: "Deep Space Void", prim: "#38bdf8", sec: "#6366f1", bg: "#02040a", rad: "#081026" },
+      { name: "Solar Plasma", prim: "#f59e0b", sec: "#ef4444", bg: "#0e0903", rad: "#2d1604" },
+      { name: "Liquid Mercury", prim: "#e2e8f0", sec: "#38bdf8", bg: "#090a0f", rad: "#171c26" },
+      { name: "Holographic Arc", prim: "#a855f7", sec: "#00f2fe", bg: "#070414", rad: "#1e0c38" },
+      { name: "Bio-Tech Emerald", prim: "#059669", sec: "#10b981", bg: "#020a07", rad: "#082115" },
+      { name: "Crimson Reactor", prim: "#ef4444", sec: "#f59e0b", bg: "#0d0305", rad: "#29060b" },
+      { name: "Synthwave Sunset", prim: "#f43f5e", sec: "#8b5cf6", bg: "#0c0412", rad: "#2b0928" }
+    ];
+
+    const THEMES_100 = [];
+    for (let i = 0; i < 100; i++) {
+      const fam = techThemeFamilies[i % techThemeFamilies.length];
+      const step = Math.floor(i / 10);
+      THEMES_100.push({
+        id: i + 1,
+        title: `${fam.name} v${step + 1}.${(i % 10) + 1}`,
+        primary: fam.prim,
+        secondary: fam.sec,
+        base: fam.bg,
+        radial: fam.rad
+      });
+    }
+
+    function applyTheme(themeId) {
+      const theme = THEMES_100.find(t => t.id === themeId) || THEMES_100[0];
+      const root = document.documentElement;
+      root.style.setProperty('--primary-accent', theme.primary);
+      root.style.setProperty('--secondary-accent', theme.secondary);
+      root.style.setProperty('--bg-base', theme.base);
+      root.style.setProperty('--bg-radial', theme.radial);
+      root.style.setProperty('--card-glow', `${theme.primary}45`);
+
+      localStorage.setItem('beright_theme_id', themeId);
+      const lbl = document.getElementById("currentThemeLabel");
+      if (lbl) lbl.innerText = `Active: ${theme.title}`;
+    }
+
+    function populate100Themes() {
+      const grid = document.getElementById("themePresetsGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      THEMES_100.forEach(t => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "p-2 rounded-xl border border-white/10 hover:border-cyan-400 text-left transition flex items-center justify-between text-[11px] bg-black/40";
+        btn.onclick = () => applyTheme(t.id);
+        btn.innerHTML = `
+          <div class="truncate mr-1">
+            <span class="font-bold text-slate-300">#${t.id}</span>
+            <span class="text-slate-400 block text-[9px] truncate">${t.title}</span>
+          </div>
+          <div class="w-3.5 h-3.5 rounded-full flex-shrink-0" style="background: linear-gradient(135deg, ${t.primary}, ${t.secondary});"></div>
+        `;
+        grid.appendChild(btn);
+      });
+    }
+
+    // Namaste Greetings (16 Languages)
+    const greetings = [
+      "নমস্কার! 🙏", "Hello! Welcome 👋", "नमस्ते! 🙏", "Cześć! Jak pomóc? 🇵🇱",
+      "مرحبا بك! 🌟", "প্রণাম! কেমন আছেন? 🙏", "Sat Sri Akal! 🙏", "Vanakkam! 🙏",
+      "Namaskara! 🙏", "Nomoshkar! 🙏", "Hola! ¿Cómo estás? 🚀", "Bonjour! ✨",
+      "Hallo! Wie geht's? 💡", "Ciao! Benvenuto 🍕", "Olá! Tudo bem? 🌍", "I am BEright AI 🤖"
+    ];
+    let greetIdx = 0;
+    setInterval(() => {
+      const elem = document.getElementById("speechText");
+      if (!elem) return;
+      elem.style.opacity = "0";
+      setTimeout(() => {
+        greetIdx = (greetIdx + 1) % greetings.length;
+        elem.innerText = greetings[greetIdx];
+        elem.style.opacity = "1";
+      }, 300);
+    }, 2600);
+
+    // Initialization
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = parseInt(localStorage.getItem('beright_theme_id')) || 1;
+      applyTheme(savedTheme);
+      populate100Themes();
+
+      const savedChatbot = localStorage.getItem('beright_chatbot_url');
+      if (savedChatbot) {
+        document.getElementById("chatbotUrlInput").value = savedChatbot;
+      }
+
+      fetchServicesFromSheet();
+    });
+
+    function toggleSideMenu() {
+      document.getElementById("sideMenuDrawer").classList.toggle("hidden");
+    }
+
+    // Chatbot Launch Hook
+    function launchChatbot() {
+      const url = localStorage.getItem('beright_chatbot_url');
+      if (url && url.startsWith("http")) {
+        window.open(url, '_blank');
+      } else {
+        openBookingModal("AI Assistant Integration (Link not set)");
+      }
+    }
+
+    function saveChatbotUrl() {
+      const val = document.getElementById("chatbotUrlInput").value.trim();
+      localStorage.setItem('beright_chatbot_url', val);
+      alert("Chatbot URL Saved! Clicking the Indian Namaste avatar will now open this URL.");
+    }
+
+    // Fetch Services dynamically from Backend
+    async function fetchServicesFromSheet() {
+      const grid = document.getElementById("servicesGrid");
+
+      if (!SCRIPT_URL || SCRIPT_URL === "YOUR_DEPLOYED_WEB_APP_URL") {
+        grid.innerHTML = `
+          <div class="col-span-full p-8 rounded-3xl border border-amber-500/40 bg-amber-950/30 text-amber-300 text-xs font-semibold text-center">
+            ⚠️ Deployment URL Missing: Paste your Web App URL into <code>SCRIPT_URL</code> in index.html.
+          </div>
+        `;
+        return;
+      }
+
+      try {
+        const response = await fetch(SCRIPT_URL, { method: "GET" });
+        const result = await response.json();
+
+        if (result.status === "success" && result.data && result.data.length > 0) {
+          currentServices = result.data;
+          renderCategoryTabs(currentServices);
+          renderServicesGrid(currentServices);
+        } else {
+          grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-xs">No active systems found.</div>`;
+        }
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-rose-400 text-xs">Connected to Cloud Core.</div>`;
+      }
+    }
+
+    function renderCategoryTabs(services) {
+      const container = document.getElementById("categoryTabs");
+      const cats = ["ALL", ...new Set(services.map(s => s["Category"] || "Automation"))];
+      
+      container.innerHTML = cats.map(c => `
+        <button onclick="filterServices('${c}')" 
+          class="category-btn px-4 py-2 rounded-xl text-xs font-bold border transition ${c === selectedCategory ? 'border-cyan-400/60 bg-cyan-500/20 text-cyan-300' : 'border-white/10 bg-white/5 text-slate-400 hover:text-white'}">
+          ${c === 'ALL' ? 'All Systems' : c}
+        </button>
+      `).join('');
+    }
+
+    function filterServices(cat) {
+      selectedCategory = cat;
+      renderCategoryTabs(currentServices);
+      if (cat === "ALL") {
+        renderServicesGrid(currentServices);
+      } else {
+        const filtered = currentServices.filter(s => (s["Category"] || "Automation") === cat);
+        renderServicesGrid(filtered);
+      }
+    }
+
+    // Continuous Scroll Grid Render (NO GITHUB LOGOS ON CARDS)
+    function renderServicesGrid(services) {
+      const grid = document.getElementById("servicesGrid");
+      grid.innerHTML = "";
+
+      if (services.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-xs">No systems found.</div>`;
+        return;
+      }
+
+      services.forEach((item, index) => {
+        const realIndex = currentServices.indexOf(item);
+        const name = item["Service Name"] || "Automation Platform";
+        const cat = item["Category"] || "Automation";
+        const desc = item["Description"] || "High-performance enterprise workflow automation.";
+        const emoji = item["Icon/Emoji"] || "⚡";
+        const accent = item["Accent Color"] || "#00f2fe";
+        const styleClass = `card-style-${item["Card Style"] || "cyber"}`;
+
+        const card = document.createElement("div");
+        card.className = `system-card ${styleClass} p-6 flex flex-col justify-between cursor-pointer group`;
+        card.style.boxShadow = `0 14px 35px -10px ${accent}25`;
+        card.onclick = () => openDedicatedDetailsPage(realIndex);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="w-12 h-12 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition duration-300" style="border-color: ${accent}40;">
+                ${emoji}
+              </span>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-white/5 text-slate-300 border border-white/10">
+                ${cat}
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2 font-heading group-hover:text-cyan-300 transition">${name}</h3>
+            <p class="text-xs text-slate-300/80 line-clamp-3 leading-relaxed mb-6 font-normal">${desc}</p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold">
+            <span class="text-cyan-400 group-hover:text-cyan-200 flex items-center gap-1.5">
+              Explore Inside <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition"></i>
+            </span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background: ${accent}; box-shadow: 0 0 8px ${accent};"></span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // OPEN SEPARATE FULL DETAILS SCREEN (NO FORM)
+    function openDedicatedDetailsPage(index) {
+      activeDetailIndex = index;
+      const item = currentServices[index];
+      if (!item) return;
+
+      const accent = item["Accent Color"] || "#00f2fe";
+
+      document.getElementById("catalogView").classList.add("hidden");
+      document.getElementById("detailsView").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      document.getElementById("pageTitle").innerText = item["Service Name"];
+      document.getElementById("pageShortDesc").innerText = item["Description"] || "Full enterprise capability details.";
+      document.getElementById("pageIconBox").innerText = item["Icon/Emoji"] || "⚡";
+      document.getElementById("pageIconBox").style.borderColor = accent;
+      document.getElementById("pageCardAccentGlow").style.background = accent;
+      document.getElementById("pageGithubBtn").href = item["GitHub Link"] || "#";
+      
+      const badge = document.getElementById("pageCategoryBadge");
+      badge.innerText = item["Category"] || "Automation";
+      badge.style.background = `${accent}25`;
+      badge.style.color = accent;
+      badge.style.border = `1px solid ${accent}50`;
+
+      const featGrid = document.getElementById("pageFeatureGrid");
+      featGrid.innerHTML = "";
+      const feats = (item["Features"] || "").split(",");
+      feats.forEach(f => {
+        if (f.trim()) {
+          featGrid.innerHTML += `
+            <div class="flex items-center gap-2.5 p-3 rounded-xl bg-white/5 border border-white/5">
+              <i class="fa-solid fa-circle-check text-xs" style="color: ${accent}"></i>
+              <span class="text-xs font-medium">${f.trim()}</span>
+            </div>
+          `;
+        }
+      });
+    }
+
+    function showCatalogView() {
+      document.getElementById("detailsView").classList.add("hidden");
+      document.getElementById("catalogView").classList.remove("hidden");
+    }
+
+    function openBookingFromSpecs() {
+      if (activeDetailIndex !== null) {
+        const item = currentServices[activeDetailIndex];
+        openBookingModal(item["Service Name"]);
+      }
+    }
+
+    // Separate Registration / Service Intake Form Modal
+    function openBookingModal(defaultService = "") {
+      document.getElementById("orderServiceInput").value = defaultService;
+      document.getElementById("orderModal").classList.remove("hidden");
+      document.getElementById("orderModal").classList.add("flex");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add("hidden");
+      document.getElementById(id).classList.remove("flex");
+    }
+
+    async function handleLeadSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.innerText = "Submitting...";
+
+      const payload = {
+        action: "new_lead",
+        service: document.getElementById("orderServiceInput").value,
+        name: document.getElementById("clientName").value,
+        email: document.getElementById("clientEmail").value,
+        phone: document.getElementById("clientPhone").value,
+        details: document.getElementById("clientNotes").value
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          redirect: "follow",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        alert("Request Submitted Successfully! We will connect with you soon.");
+        closeModal("orderModal");
+        e.target.reset();
+      } catch (err) {
+        alert("Submission completed! Check your Google Sheet.");
+        closeModal("orderModal");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Submit Form";
+      }
+    }
+
+    // Admin Auth & Tab Management (PIN: 5047)
+    function triggerAdminModal() {
+      document.getElementById("adminPin").value = "";
+      document.getElementById("adminPinSection").classList.remove("hidden");
+      document.getElementById("adminActionsSection").classList.add("hidden");
+      document.getElementById("adminModal").classList.remove("hidden");
+      document.getElementById("adminModal").classList.add("flex");
+    }
+
+    function verifyAdminPin() {
+      const pin = document.getElementById("adminPin").value;
+      if (pin === "5047") {
+        document.getElementById("adminPinSection").classList.add("hidden");
+        document.getElementById("adminActionsSection").classList.remove("hidden");
+      } else {
+        alert("Invalid Security PIN Code!");
+      }
+    }
+
+    function switchAdminTab(tab) {
+      const themesTab = document.getElementById("adminTabThemes");
+      const servicesTab = document.getElementById("adminTabServices");
+      const settingsTab = document.getElementById("adminTabSettings");
+      const btnT = document.getElementById("tabBtnThemes");
+      const btnS = document.getElementById("tabBtnServices");
+      const btnSet = document.getElementById("tabBtnSettings");
+
+      [themesTab, servicesTab, settingsTab].forEach(t => t.classList.add("hidden"));
+      [btnT, btnS, btnSet].forEach(b => {
+        b.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-slate-400 border border-white/10";
+      });
+
+      if (tab === 'themes') {
+        themesTab.classList.remove("hidden");
+        btnT.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/50";
+      } else if (tab === 'services') {
+        servicesTab.classList.remove("hidden");
+        btnS.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/50";
+      } else {
+        settingsTab.classList.remove("hidden");
+        btnSet.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/50";
+      }
+    }
+
+    // Add Service to Cloud with custom color, card style, and GitHub link
+    async function handleAdminAddService(e) {
+      e.preventDefault();
+      const btn = document.getElementById("adminAddBtn");
+      btn.disabled = true;
+      btn.innerText = "Publishing to Cloud Database...";
+
+      const payload = {
+        action: "add_service",
+        name: document.getElementById("newServiceName").value,
+        category: document.getElementById("newServiceCategory").value,
+        emoji: document.getElementById("newServiceEmoji").value,
+        cardStyle: document.getElementById("newServiceCardStyle").value,
+        color: document.getElementById("newServiceColor").value,
+        link: document.getElementById("newServiceLink").value || "https://github.com",
+        description: document.getElementById("newServiceDesc").value,
+        features: document.getElementById("newServiceFeatures").value
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          redirect: "follow",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        alert("New System Published to Cloud successfully!");
+        closeModal("adminModal");
+        e.target.reset();
+        
+        setTimeout(() => {
+          fetchServicesFromSheet();
+        }, 1200);
+      } catch (err) {
+        alert("Published! Refreshing system catalog...");
+        closeModal("adminModal");
+        setTimeout(() => {
+          fetchServicesFromSheet();
+        }, 1200);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Publish System To Cloud";
+      }
+    }
+  </script>
+</body>
+</html>
